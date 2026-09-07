@@ -2,18 +2,12 @@
 //  Notifications.swift
 //  Jam
 //
-//  Satu-satunya tempat yang berurusan dengan UNUserNotificationCenter.
-//
-//  Catatan jujur: notifikasi lokal TIDAK menembus silent mode atau Focus.
-//  Jadi ini belum sekelas alarm bawaan iOS — untuk itu perlu AlarmKit.
-//  Sebagai dasar, ini sudah benar dan cukup.
+//  Created by Maula Izza Azizi on 06/09/26.
 //
 
 import Foundation
 import UserNotifications
 
-/// Tanpa delegate ini, notifikasi lokal tidak bersuara/banner saat app
-/// sedang di foreground — yang justru saat pengguna menatap timer selesai.
 private final class ForegroundPresenter: NSObject, UNUserNotificationCenterDelegate {
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
@@ -61,7 +55,6 @@ enum Notifications {
 
     // MARK: Alarm
 
-    /// Satu alarm bisa jadi beberapa request — satu per hari yang dipilih.
     static func scheduleAlarm(_ alarm: Alarm) async {
         cancel(prefix: alarm.id.uuidString)
         guard alarm.isEnabled, await requestIfNeeded() else { return }
@@ -72,7 +65,6 @@ enum Notifications {
         content.sound = .default
 
         if alarm.weekdays.isEmpty {
-            // Sekali saja, pada kemunculan berikutnya.
             var components = DateComponents()
             components.hour = alarm.hour
             components.minute = alarm.minute
@@ -92,7 +84,7 @@ enum Notifications {
             var components = DateComponents()
             components.hour = alarm.hour
             components.minute = alarm.minute
-            components.weekday = weekday   // 1 = Minggu … 7 = Sabtu
+            components.weekday = weekday
 
             let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
             try? await center.add(
@@ -111,7 +103,6 @@ enum Notifications {
         center.removePendingNotificationRequests(withIdentifiers: [id])
     }
 
-    /// Membatalkan semua request milik satu alarm, berapa pun harinya.
     static func cancel(prefix: String) {
         center.getPendingNotificationRequests { requests in
             let ids = requests.map(\.identifier).filter { $0.hasPrefix(prefix) }

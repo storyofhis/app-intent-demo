@@ -2,9 +2,7 @@
 //  StopwatchModel.swift
 //  Jam
 //
-//  Waktu dihitung dari selisih dua Date, bukan dari menambah angka tiap tick.
-//  Kalau ditambah per tick, dia akan meleset saat app di-background atau saat
-//  frame drop. Timer di sini cuma buat menggambar, bukan buat menghitung.
+//  Created by Maula Izza Azizi on 06/09/26.
 //
 
 import Foundation
@@ -23,10 +21,8 @@ final class StopwatchModel {
 
     private(set) var laps: [Lap] = []
 
-    /// Waktu mulai periode berjalan. Nil berarti sedang berhenti.
     private var startedAt: Date?
 
-    /// Total waktu dari periode-periode sebelumnya.
     private var accumulated: TimeInterval = 0
 
     private var lastLapTotal: TimeInterval = 0

@@ -2,14 +2,14 @@
 //  JamApp.swift
 //  Jam
 //
-//  Alarm, stopwatch, timer. Kode dasar — belum ada App Intents, belum ada
-//  Foundation Models.
+//  Created by Maula Izza Azizi on 06/09/26.
 //
 
 import SwiftUI
 
 @main
 struct JamApp: App {
+    
     var body: some Scene {
         WindowGroup {
             RootView()

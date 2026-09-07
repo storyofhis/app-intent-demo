@@ -2,11 +2,7 @@
 //  CountdownModel.swift
 //  Jam
 //
-//  Sama seperti stopwatch: yang disimpan adalah tanggal selesai, bukan angka
-//  yang dikurangi tiap detik. Jadi kalau app ditutup lalu dibuka lagi, sisa
-//  waktunya tetap benar.
-//
-//  Notifikasi dijadwalkan saat start, karena kode tidak jalan di background.
+//  Created by Maula Izza Azizi on 07/09/26.
 //
 
 import AudioToolbox

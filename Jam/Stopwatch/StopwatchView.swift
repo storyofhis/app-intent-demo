@@ -13,8 +13,6 @@ struct StopwatchView: View {
         NavigationStack {
             VStack(spacing: 28) {
 
-                // TimelineView menggambar ulang sendiri — tidak perlu Timer object,
-                // dan tidak ada angka yang disimpan lalu ditambah.
                 TimelineView(.periodic(from: .now, by: 0.03)) { context in
                     Text(TimeFormat.stopwatch(model.elapsed(at: context.date)))
                         .font(.system(size: 62, weight: .light, design: .rounded))
