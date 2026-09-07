@@ -9,6 +9,7 @@
 //  Notifikasi dijadwalkan saat start, karena kode tidak jalan di background.
 //
 
+import AudioToolbox
 import Foundation
 import Observation
 
@@ -76,10 +77,14 @@ final class CountdownModel {
     }
 
     /// Dipanggil oleh view saat sisa waktu menyentuh nol.
+    /// Suara dibunyikan langsung di sini, bukan lewat notifikasi — supaya
+    /// kedengaran walau app lagi dibuka dan ditatap (notifikasi tidak
+    /// bersuara saat app foreground kecuali app-nya di-background dulu).
     func finishIfNeeded(at now: Date) {
         guard isRunning, let endsAt, now >= endsAt else { return }
         isRunning = false
         pausedRemaining = 0
         self.endsAt = nil
+        AudioServicesPlaySystemSound(1005)
     }
 }

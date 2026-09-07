@@ -12,12 +12,25 @@
 import Foundation
 import UserNotifications
 
+/// Tanpa delegate ini, notifikasi lokal tidak bersuara/banner saat app
+/// sedang di foreground — yang justru saat pengguna menatap timer selesai.
+private final class ForegroundPresenter: NSObject, UNUserNotificationCenterDelegate {
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification
+    ) async -> UNNotificationPresentationOptions {
+        [.banner, .sound, .list]
+    }
+}
+
 enum Notifications {
 
     private static var center: UNUserNotificationCenter { .current() }
+    private static let presenter = ForegroundPresenter()
 
     @discardableResult
     static func requestIfNeeded() async -> Bool {
+        center.delegate = presenter
         let settings = await center.notificationSettings()
 
         switch settings.authorizationStatus {
