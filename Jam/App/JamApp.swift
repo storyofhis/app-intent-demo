@@ -9,7 +9,6 @@ import SwiftUI
 
 @main
 struct JamApp: App {
-    
     var body: some Scene {
         WindowGroup {
             RootView()
